@@ -1,0 +1,90 @@
+clear all;
+
+ms = 300;
+mu = 50;
+ks = 15000;
+kt = 150000;
+bs = 900;
+wn = {6.5*10^-2, 57.5*10*2};
+
+s = tf('s');
+
+A_1 = [0, 1, 0, -1];
+A_2 = [-ks/ms, -bs/ms, 0, bs/ms];
+A_3 = [0, 0, 0, 1];
+A_4 = [ks/mu, bs/mu, -kt/mu, -bs/mu];
+A = [A_1; A_2; A_3; A_4];
+
+B = [0; 1/ms; 0; -1/mu];
+L = [0; 0; -1; 0];
+
+% rho = [0.2, 0.1, 0.2, 0.1];
+% rho = [20000, 100, 20000, 100];
+rho = [200, 10, 200, 10];
+
+Q_1 = [rho(1)+ks^2/ms^2, ks*bs/ms^2, 0, -ks*bs/ms^2];
+Q_2 = [ks*bs/ms^2, rho(2)+bs^2/ms^2, 0, -bs^2/ms^2];
+Q_3 = [0, 0, rho(3), 0];
+Q_4 = [-ks*bs/ms^2, -bs^2/ms^2, 0, rho(4)+bs^2/ms^2];
+Q = [Q_1; Q_2; Q_3; Q_4];
+
+N = [-ks/ms^2; -bs/ms^2; 0; bs/ms^2];
+
+R = 1/ms^2;
+
+[K, S, e] = lqr(A, B, Q, R, N);
+
+
+figure(1);
+[s_a, s_b] = ss2tf(A, L, [0, 1, 0, 0], 0);
+Ta_p = s * tf(s_a, s_b);
+bode(Ta_p);
+hold on;
+[s_a, s_b] = ss2tf(A-B*K, L, [0, 1, 0, 0], 0);
+Ta_a = s * tf(s_a, s_b);
+bode(Ta_a);
+title('Acceleration Transfer Function');
+legend({'Passive', 'Active'});
+
+
+figure(2);
+[s_a, s_b] = ss2tf(A, L, [1, 0, 0, 0], 0);
+Tr_p = tf(s_a, s_b);
+bode(Tr_p);
+hold on;
+[s_a, s_b] = ss2tf(A-B*K, L, [1, 0, 0, 0], 0);
+Tr_a = tf(s_a, s_b);
+bode(Tr_a);
+title('Rattle Space Transfer Function');
+legend({'Passive', 'Active'});
+
+
+figure(3);
+[s_a, s_b] = ss2tf(A, L, [0, 0, 1, 0], 0);
+Tt_p = tf(s_a, s_b);
+bode(Tt_p);
+hold on;
+[s_a, s_b] = ss2tf(A-B*K, L, [0, 0, 1, 0], 0);
+Tt_a = tf(s_a, s_b);
+bode(Tt_a);
+title('Tyre Deflection Transfer Function');
+legend({'Passive', 'Active'});
+
+
+gm_gp_p = [];
+gm_gp_a = [];
+
+[gm, gp] = margin(Ta_p);
+gm_gp_p = [gm_gp_p; gm, gp];
+[gm, gp] = margin(Tr_p);
+gm_gp_p = [gm_gp_p; gm, gp];
+[gm, gp] = margin(Tt_p);
+gm_gp_p = [gm_gp_p; gm, gp];
+
+
+[gm, gp] = margin(Ta_a);
+gm_gp_a = [gm_gp_a; gm, gp];
+[gm, gp] = margin(Tr_a);
+gm_gp_a = [gm_gp_a; gm, gp];
+[gm, gp] = margin(Tt_a);
+gm_gp_a = [gm_gp_a; gm, gp];
