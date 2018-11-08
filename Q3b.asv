@@ -77,14 +77,14 @@ gm_gp_a = [];
 [gm, gp] = margin(Ta_p);
 gm_gp_p = [gm_gp_p; gm, gp, bandwidth(Ta_p)];
 [gm, gp] = margin(Tr_p);
-gm_gp_p = [gm_gp_p; gm, gp, bandwidth(Tr_p)];
+gm_gp_p = [gm_gp_p; gm, gp, ];
 [gm, gp] = margin(Tt_p);
-gm_gp_p = [gm_gp_p; gm, gp, bandwidth(Tt_p)];
+gm_gp_p = [gm_gp_p; gm, gp];
 
 
 [gm, gp] = margin(Ta_a);
-gm_gp_a = [gm_gp_a; gm, gp, bandwidth(Ta_a)];
+gm_gp_a = [gm_gp_a; gm, gp];
 [gm, gp] = margin(Tr_a);
-gm_gp_a = [gm_gp_a; gm, gp, bandwidth(Tr_a)];
+gm_gp_a = [gm_gp_a; gm, gp];
 [gm, gp] = margin(Tt_a);
-gm_gp_a = [gm_gp_a; gm, gp, bandwidth(Tt_a)];
+gm_gp_a = [gm_gp_a; gm, gp];

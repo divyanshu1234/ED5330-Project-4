@@ -37,6 +37,6 @@ for kt = kt_list
     gm_pm = [gm_pm; gm, pm];
 end
 
-figure(1); legend({'kt=100000 N/m', 'bs=150000 N/m', 'bs=200000 N/m'});
-figure(2); legend({'kt=100000 N/m', 'bs=150000 N/m', 'bs=200000 N/m'});
-figure(3); legend({'kt=100000 N/m', 'bs=150000 N/m', 'bs=200000 N/m'});
+figure(1); legend({'kt=100000 N/m', 'kt=150000 N/m', 'kt=200000 N/m'});
+figure(2); legend({'kt=100000 N/m', 'kt=150000 N/m', 'kt=200000 N/m'});
+figure(3); legend({'kt=100000 N/m', 'kt=150000 N/m', 'kt=200000 N/m'});

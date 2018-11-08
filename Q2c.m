@@ -20,21 +20,21 @@ for ks = ks_list
     title('Bode - Acceleration Transfer Function');
     hold on;
     [gm, pm] = margin(Ta);
-    gm_pm = [gm_pm; gm, pm];
+    gm_pm = [gm_pm; gm, pm, bandwidth(Ta, -3)];
     
     figure(2);
     bode(Tr, wn);
     title('Bode - Rattle Space Transfer Function');
     hold on;
     [gm, pm] = margin(Tr);
-    gm_pm = [gm_pm; gm, pm];
+    gm_pm = [gm_pm; gm, pm, bandwidth(Tr, -3)];
     
     figure(3);
     bode(Tt, wn);
     title('Bode - Tyre Deflection Transfer Function');
     hold on;
     [gm, pm] = margin(Tt);
-    gm_pm = [gm_pm; gm, pm];
+    gm_pm = [gm_pm; gm, pm, bandwidth(Tt, -3)];
     
 end
 
